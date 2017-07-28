@@ -106,7 +106,7 @@ for f in webfinger exchange-autodiscover; do #NODOC
 done #NODOC
 
 # Start services.
-restart_service nginx
+# restart_service nginx
 restart_service php7.0-fpm
 
 # Open ports.
