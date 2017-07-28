@@ -88,6 +88,19 @@ fi
 
 hide_output add-apt-repository -y ppa:mail-in-a-box/ppa
 
+# remove the bogus sources.list generated for the current distribution
+rm "/etc/apt/sources.list.d/mail-in-a-box-ubuntu-ppa-$DISTRIB_CODENAME.list"
+
+TRUSTY_PPA_FILEPATH='/etc/apt/sources.list.d/mail-in-a-box-ubuntu-ppa-trusty'
+TRUSTY_PPA_URL='http://ppa.launchpad.net/mail-in-a-box/ppa/ubuntu'
+
+echo "deb $TRUSTY_PPA_URL trusty main" > "$TRUSTY_PPA_FILEPATH.list"
+echo "# deb-src $TRUSTY_PPA_URL trusty main" >> "$TRUSTY_PPA_FILEPATH.list"
+
+echo "deb $TRUSTY_PPA_URL trusty main" > "$TRUSTY_PPA_FILEPATH.save"
+echo "# deb-src $TRUSTY_PPA_URL trusty main" >> "$TRUSTY_PPA_FILEPATH.save"
+
+
 # ### Update Packages
 
 # Update system packages to make sure we have the latest upstream versions of things from Ubuntu.
