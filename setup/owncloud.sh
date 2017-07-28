@@ -5,15 +5,26 @@
 source setup/functions.sh # load our functions
 source /etc/mailinabox.conf # load global vars
 
+
+
 # ### Installing Nextcloud
 
 echo "Installing Nextcloud (contacts/calendar)..."
 
-# Keep the php5 dependancies for the owncloud upgrades
+
+echo "Installing PHP 5.6 for building legacy owncloud..."
+sudo apt-get purge `dpkg -l | grep php| awk '{print $2}' |tr "\n" " "`
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+sudo apt-get update
+
+
+
+# Keep the php5.6 dependancies for the owncloud upgrades
 apt_install \
 	dbconfig-common \
-	php5-cli php5-sqlite php5-gd php5-imap php5-curl php-pear php-apc curl libapr1 libtool libcurl4-openssl-dev php-xml-parser \
-	php5 php5-dev php5-gd php5-fpm memcached php5-memcached
+	php5.6-cli php5.6-sqlite php5.6-gd php5.6-imap php5.6-curl php-pear php-apc curl libapr1 libtool libcurl4-openssl-dev php-xml-parser \
+	php5.6 php5.6-dev php5.6-gd php5.6-fpm memcached php5.6-memcached
 
 apt-get purge -qq -y owncloud*
 
@@ -143,12 +154,12 @@ InstallOwncloud() {
 	if [ -e $STORAGE_ROOT/owncloud/owncloud.db ]; then
 		# ownCloud 8.1.1 broke upgrades. It may fail on the first attempt, but
 		# that can be OK.
-		sudo -u www-data php5 /usr/local/lib/owncloud/occ upgrade
+		sudo -u www-data php5.6 /usr/local/lib/owncloud/occ upgrade
 		if [ \( $? -ne 0 \) -a \( $? -ne 3 \) ]; then
 			echo "Trying ownCloud upgrade again to work around ownCloud upgrade bug..."
-			sudo -u www-data php5 /usr/local/lib/owncloud/occ upgrade
+			sudo -u www-data php5.6 /usr/local/lib/owncloud/occ upgrade
 			if [ \( $? -ne 0 \) -a \( $? -ne 3 \) ]; then exit 1; fi
-			sudo -u www-data php5 /usr/local/lib/owncloud/occ maintenance:mode --off
+			sudo -u www-data php5.6 /usr/local/lib/owncloud/occ maintenance:mode --off
 			echo "...which seemed to work."
 		fi
 	fi
@@ -163,7 +174,7 @@ if [ ! -d /usr/local/lib/owncloud/ ] \
 
 	# Stop php-fpm
 	hide_output service php7.0-fpm stop
-	hide_output service php5-fpm stop
+	hide_output service php5.6-fpm stop
 
 	# Backup the existing ownCloud/Nextcloud.
 	# Create a backup directory to store the current installation and database to
@@ -213,13 +224,13 @@ EOF
 			# The owncloud 9 migration doesn't migrate calendars and contacts
 			# The option to migrate these are removed in 9.1
 			# So the migrations should be done when we have 9.0 installed
-			sudo -u www-data php5 /usr/local/lib/owncloud/occ dav:migrate-addressbooks
+			sudo -u www-data php5.6 /usr/local/lib/owncloud/occ dav:migrate-addressbooks
 			# The following migration has to be done for each owncloud user
 			for directory in $STORAGE_ROOT/owncloud/*@*/ ; do
 				username=$(basename "${directory}")
-				sudo -u www-data php5 /usr/local/lib/owncloud/occ dav:migrate-calendar $username
+				sudo -u www-data php5.6 /usr/local/lib/owncloud/occ dav:migrate-calendar $username
 			done
-			sudo -u www-data php5 /usr/local/lib/owncloud/occ dav:sync-birthday-calendar
+			sudo -u www-data php5.6 /usr/local/lib/owncloud/occ dav:sync-birthday-calendar
 		fi
 
 		# If we are upgrading from 9.0.x we should go to 9.1 first.
@@ -321,7 +332,7 @@ fi
 # * We need to set the timezone to the system timezone to allow fail2ban to ban
 #   users within the proper timeframe
 # * We need to set the logdateformat to something that will work correctly with fail2ban
-# * mail_domain' needs to be set every time we run the setup. Making sure we are setting 
+# * mail_domain' needs to be set every time we run the setup. Making sure we are setting
 #   the correct domain name if the domain is being change from the previous setup.
 # Use PHP to read the settings file, modify it, and write out the new settings array.
 TIMEZONE=$(cat /etc/timezone)
