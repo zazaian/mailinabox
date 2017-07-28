@@ -74,7 +74,8 @@ if [ ! -f $STORAGE_ROOT/ssl/ssl_certificate.pem ]; then
 	CSR=/tmp/ssl_cert_sign_req-$$.csr
 	hide_output \
 	openssl req -new -key $STORAGE_ROOT/ssl/ssl_private_key.pem -out $CSR \
-	  -sha256
+	  -sha256 -subj "/C=US/ST=Michigan/L=Detroit/O=Functionhaus/CN=$PRIMARY_HOSTNAME"
+
 
 	# Generate the self-signed certificate.
 	CERT=$STORAGE_ROOT/ssl/$PRIMARY_HOSTNAME-selfsigned-$(date --rfc-3339=date | sed s/-//g).pem
