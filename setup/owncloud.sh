@@ -24,13 +24,14 @@ sudo apt-get update
 # Keep the php5.6 dependancies for the owncloud upgrades
 apt_install \
 	dbconfig-common \
-	php5.6-cli php5.6-sqlite php5.6-gd php5.6-imap php5.6-curl php-pear php-apc curl libapr1 libtool libcurl4-openssl-dev php-xml-parser \
-	php5.6 php5.6-dev php5.6-gd php5.6-fpm memcached php5.6-memcached
+	php5.6-cli php5.6-sqlite php5.6-gd php5.6-imap php5.6-curl php-pear curl libapr1 libtool libcurl4-openssl-dev php-xml-parser \
+	php5.6 php5.6-dev php5.6-gd php5.6-fpm memcached php5.6-memcached php-dev php-json libpcre3-dev php-apcu
+
 
 apt-get purge -qq -y owncloud*
 
 apt_install php7.0 php7.0-fpm \
-	php7.0-cli php7.0-sqlite php7.0-gd php7.0-imap php7.0-curl php-pear php-apc curl \
+	php7.0-cli php7.0-sqlite php7.0-gd php7.0-imap php7.0-curl php-pear curl \
         php7.0-dev php7.0-gd memcached php7.0-memcached php7.0-xml php7.0-mbstring php7.0-zip php7.0-apcu
 
 # Migrate <= v0.10 setups that stored the ownCloud config.php in /usr/local rather than
