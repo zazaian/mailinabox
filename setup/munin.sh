@@ -60,8 +60,8 @@ done
 mkdir -p /var/lib/munin-node/plugin-state/
 
 # Restart services.
-restart_service munin
-restart_service munin-node
+# restart_service munin
+# restart_service munin-node
 
 # generate initial statistics so the directory isn't empty
 # (We get "Pango-WARNING **: error opening config file '/root/.config/pango/pangorc': Permission denied"
