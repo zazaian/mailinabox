@@ -89,7 +89,7 @@ fi
 hide_output add-apt-repository -y ppa:mail-in-a-box/ppa
 
 # remove the bogus sources.list generated for the current distribution
-rm "/etc/apt/sources.list.d/mail-in-a-box-ubuntu-ppa-$DISTRIB_CODENAME.list"
+rm "/etc/apt/sources.list.d/mail-in-a-box-ubuntu-ppa-$UBUNTU_CODENAME.list"
 
 TRUSTY_PPA_FILEPATH='/etc/apt/sources.list.d/mail-in-a-box-ubuntu-ppa-trusty'
 TRUSTY_PPA_URL='http://ppa.launchpad.net/mail-in-a-box/ppa/ubuntu'
