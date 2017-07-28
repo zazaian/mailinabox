@@ -30,6 +30,11 @@ rm -f /etc/nginx/sites-enabled/default
 # SSL settings from @konklone. Replace STORAGE_ROOT so it can find
 # the DH params.
 rm -f /etc/nginx/nginx-ssl.conf # we used to put it here
+
+# we can't have duplicates, lest we endure the dreaded
+# "ssl_prefer_server_ciphers" directive is duplicate error
+mv /etc/nginx/conf.d/ssl.conf /etc/nginx/conf.d/ssl.conf.orig
+
 sed "s#STORAGE_ROOT#$STORAGE_ROOT#" \
 	conf/nginx-ssl.conf > /etc/nginx/conf.d/ssl.conf
 
@@ -106,7 +111,7 @@ for f in webfinger exchange-autodiscover; do #NODOC
 done #NODOC
 
 # Start services.
-# restart_service nginx
+restart_service nginx
 restart_service php7.0-fpm
 
 # Open ports.
