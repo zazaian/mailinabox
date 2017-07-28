@@ -110,4 +110,4 @@ cat > /etc/cron.d/mailinabox-nightly << EOF;
 EOF
 
 # Start the management server.
-restart_service mailinabox
+# restart_service mailinabox

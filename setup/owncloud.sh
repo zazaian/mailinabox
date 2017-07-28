@@ -15,9 +15,9 @@ echo "Installing Nextcloud (contacts/calendar)..."
 echo "Installing PHP 5.6 for building legacy owncloud..."
 # don't use this unless you want to remove all existing php packages
 # sudo apt-get purge `dpkg -l | grep php| awk '{print $2}' |tr "\n" " "`
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:ondrej/php
-sudo apt-get update
+hide_output sudo apt-get install software-properties-common
+hide_output sudo add-apt-repository -y ppa:ondrej/php
+hide_output sudo apt-get update
 
 
 
