@@ -92,7 +92,7 @@ ln -s `pwd`/management/daemon.py /usr/local/bin/mailinabox-daemon
 
 # Create an init script to start the management daemon and keep it
 # running after a reboot.
-ln -s $(pwd)/conf/mgmt_systemd_config /etc/systemd/system/mailinabox.service
+ln -fs $(pwd)/conf/mgmt_systemd_config /etc/systemd/system/mailinabox.service
 # reload systemd daemons to recognize new daemon
 systemctl daemon-reload
 
