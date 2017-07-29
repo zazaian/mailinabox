@@ -93,7 +93,7 @@ ln -s `pwd`/management/daemon.py /usr/local/bin/mailinabox-daemon
 # Create an init script to start the management daemon and keep it
 # running after a reboot.
 rm -f /etc/init.d/mailinabox
-ln -s $(pwd)/conf/management-initscript /etc/init.d/mailinabox
+ln -s $(pwd)/conf/mgmt_systemd_config /etc/systemd/system/mailinabox.service
 hide_output update-rc.d mailinabox defaults
 
 # Remove old files we no longer use.
@@ -110,4 +110,5 @@ cat > /etc/cron.d/mailinabox-nightly << EOF;
 EOF
 
 # Start the management server.
-restart_service mailinabox
+systemctl daemon-reload
+systemctl start mailinabox
