@@ -1,0 +1,6 @@
+rm -rf ~/mailinabox
+cd ~
+git clone https://github.com/zazaian/mailinabox.git
+cd ~/mailinabox
+git checkout staging
+./setup/start.sh
