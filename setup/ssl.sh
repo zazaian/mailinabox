@@ -19,7 +19,7 @@
 #
 # The Diffie-Hellman cipher bits are used for SMTP and HTTPS, when a
 # Diffie-Hellman cipher is selected during TLS negotiation. Diffie-Hellman
-# provides Perfect Forward Secrecy. 
+# provides Perfect Forward Secrecy.
 
 source setup/functions.sh # load our functions
 source /etc/mailinabox.conf # load global vars
@@ -74,7 +74,7 @@ if [ ! -f $STORAGE_ROOT/ssl/ssl_certificate.pem ]; then
 	CSR=/tmp/ssl_cert_sign_req-$$.csr
 	hide_output \
 	openssl req -new -key $STORAGE_ROOT/ssl/ssl_private_key.pem -out $CSR \
-	  -sha256 -subj "/CN=$PRIMARY_HOSTNAME"
+	  -sha256
 
 	# Generate the self-signed certificate.
 	CERT=$STORAGE_ROOT/ssl/$PRIMARY_HOSTNAME-selfsigned-$(date --rfc-3339=date | sed s/-//g).pem
